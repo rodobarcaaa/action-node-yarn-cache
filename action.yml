@@ -1,5 +1,5 @@
-name: 'node-npm-cache'
-description: 'Checkout Code, Setup Node and NPM Cache by SO'
+name: 'node-yarn-cache'
+description: 'Checkout Code, Setup Node and YARN Cache by SO'
 
 inputs:
   token:
@@ -16,7 +16,7 @@ inputs:
   node-version:
     required: false
     description: 'node version'
-    default: '16.x'
+    default: '18.x'
 
 runs:
   using: "composite"
@@ -31,13 +31,18 @@ runs:
       uses: actions/setup-node@v3
       with:
         node-version: ${{ inputs.node-version }}
+        
+    - name: Get yarn cache directory path
+      id: yarn-cache-dir-path
+      run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
 
     - uses: actions/cache@v3
+      id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
       with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
-          ${{ runner.os }}-node-
+          ${{ runner.os }}-yarn-      
 
 branding:
   icon: 'aperture'
