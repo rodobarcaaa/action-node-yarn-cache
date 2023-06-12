@@ -1,6 +1,6 @@
-# action-node-npm-cache
+# action-node-yarn-cache
 
-Checkout Code, Setup Node and NPM Cache by SO
+Checkout Code, Setup Node and YARN Cache by SO
 
 ## Usage
 
@@ -14,7 +14,7 @@ jobs:
     steps:
       # Add like first step
       - name: Checkout / Setup Node / NPM-Cache
-        uses: Travelonux/action-node-npm-cache@main
+        uses: Travelonux/action-node-yarn-cache@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
